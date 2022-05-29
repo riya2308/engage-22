@@ -1,0 +1,9 @@
+cmake
+opencv-python
+streamlit-webrtc
+streamlit
+tensorflow
+imutils
+pickle-mixin
+scikit-learn
+av
