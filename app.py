@@ -1,3 +1,4 @@
+#import all the libraries 
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer
 import av
@@ -10,6 +11,8 @@ import os
 from streamlit_lottie import st_lottie
 import requests
 
+
+#define a function to use lottie
 def load_lottieurl(url: str):
     r = requests.get(url)
     if r.status_code != 200:
@@ -17,10 +20,13 @@ def load_lottieurl(url: str):
     return r.json()
     
 
+#initialize a lottie by providing the url
 lottie_hello = load_lottieurl("https://assets10.lottiefiles.com/packages/lf20_0zv8teye.json")
 
+#call it on the webpage and give it a unique key
 st_lottie(lottie_hello, key="hello")
 
+#initilize all model names with their paths
 model_path='liveness.model'
 le_path='label_encoder.pickle'
 encodings='encoded_faces.pickle'
@@ -134,16 +140,11 @@ class VideoProcessor:
 
 		return av.VideoFrame.from_ndarray(frm, format='bgr24')
 
-st.markdown(
-    """
-    <style>
-        background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3TCdXGDVjJ-0YoUIwXlLJC62D5OWzoULQ_w&usqp=CAU")
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-st.header("Real time REAL or Fake Face Detection")
+#streamlit headers
+st.header("Facial Anti Spoofing")
 st.subheader("checks if the face displayed for authentication is real or not")
+
+#using webrtc live streaming and processing 
 webrtc_streamer(key="key", video_processor_factory=VideoProcessor,rtc_configuration={
 		"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
 	},sendback_audio=False, video_receiver_size=1)
