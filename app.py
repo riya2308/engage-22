@@ -7,6 +7,19 @@ import numpy as np
 import imutils
 import pickle
 import os
+from streamlit_lottie import st_lottie
+import requests
+
+def load_lottieurl(url: str):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
+    
+
+lottie_hello = load_lottieurl("https://assets10.lottiefiles.com/packages/lf20_0zv8teye.json")
+
+st_lottie(lottie_hello, key="hello")
 
 model_path='liveness.model'
 le_path='label_encoder.pickle'
@@ -121,7 +134,19 @@ class VideoProcessor:
 
 		return av.VideoFrame.from_ndarray(frm, format='bgr24')
 
-st.header("Real Time Face Attributes Classification")
+st.markdown(
+    """
+    <style>
+        background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3TCdXGDVjJ-0YoUIwXlLJC62D5OWzoULQ_w&usqp=CAU")
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+st.header("Real time REAL or Fake Face Detection")
+st.subheader("checks if the face displayed for authentication is real or not")
 webrtc_streamer(key="key", video_processor_factory=VideoProcessor,rtc_configuration={
 		"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
 	},sendback_audio=False, video_receiver_size=1)
+
+
+

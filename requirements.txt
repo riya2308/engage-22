@@ -2,6 +2,7 @@ cmake
 opencv-python
 streamlit-webrtc
 streamlit
+streamlit-lottie
 tensorflow
 imutils
 pickle-mixin
